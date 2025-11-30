@@ -64,6 +64,7 @@ services:
       - ./api:/app
       - /app/node_modules
       - ./api/uploads:/app/uploads
+    command: sh -c "npx prisma migrate deploy && npx prisma generate && npm run dev"
 
   # MCP Server
   mcp-server:
