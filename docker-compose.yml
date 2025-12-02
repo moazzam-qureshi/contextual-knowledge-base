@@ -1,3 +1,4 @@
+version: '3.8'
 
 services:
   # PostgreSQL Database for API
@@ -91,28 +92,28 @@ services:
 
   # UI (Next.js)
   ui:
-  build:
-    context: ./ui
-    dockerfile: Dockerfile
-    args:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://143.244.129.152:5001
+        NEXT_PUBLIC_MCP_URL: http://143.244.129.152:3000
+    container_name: contextual-kb-ui
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: development
       NEXT_PUBLIC_API_URL: http://143.244.129.152:5001
       NEXT_PUBLIC_MCP_URL: http://143.244.129.152:3000
-  container_name: contextual-kb-ui
-  ports:
-    - "3001:3001"
-  environment:
-    NODE_ENV: development
-    NEXT_PUBLIC_API_URL: http://143.244.129.152:5001
-    NEXT_PUBLIC_MCP_URL: http://143.244.129.152:3000
-  depends_on:
-    - api
-    - mcp-server
-  networks:
-    - contextual-kb-network
-  volumes:
-    - ./ui:/app
-    - /app/node_modules
-    - /app/.next
+    depends_on:
+      - api
+      - mcp-server
+    networks:
+      - contextual-kb-network
+    volumes:
+      - ./ui:/app
+      - /app/node_modules
+      - /app/.next
 
 networks:
   contextual-kb-network:
